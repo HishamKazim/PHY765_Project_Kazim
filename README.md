@@ -45,8 +45,7 @@ python scripts/regenerate_figures.py
 ```
 
 This runs all six notebooks in order and writes results to `data/` and the
-summary plot to `figures/scaling_summary.png`. Total runtime is ~10 minutes
-on a modern laptop.
+summary plot to `figures/scaling_summary.png`.
 
 To explore in-depth, launch Jupyter and open the notebooks in order:
 
