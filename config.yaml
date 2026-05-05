@@ -1,0 +1,81 @@
+# TiO2 quantum resource estimation — configuration
+# Edit this file to regenerate figures with different parameters.
+# No notebook code needs to be touched.
+
+system:
+  name: "Ti2O4"
+  description: "Anatase-derived cluster"
+  charge: 0
+  spin: 0
+  basis: "def2-svp"
+  geometry:
+    # Cartesian coordinates in angstroms
+    - {atom: "Ti", x: 0.000, y: 0.000, z: 0.000}
+    - {atom: "Ti", x: 1.892, y: 1.892, z: 0.950}
+    - {atom: "O",  x: 0.946, y: 0.946, z: 0.000}
+    - {atom: "O",  x: -0.946, y: -0.946, z: 0.000}
+    - {atom: "O",  x: 0.946, y: 2.838, z: 0.950}
+    - {atom: "O",  x: 2.838, y: 0.946, z: 0.950}
+
+scf:
+  method: "RHF"
+  max_cycle: 200
+  conv_tol: 1.0e-9
+
+active_spaces:
+  # Each entry: (n_electrons, n_orbitals, label)
+  - {nelec: 4,  norb: 4,  label: "small"}
+  - {nelec: 8,  norb: 8,  label: "medium"}
+  - {nelec: 12, norb: 12, label: "target"}
+  - {nelec: 16, norb: 16, label: "large"}
+  - {nelec: 20, norb: 20, label: "xlarge"}
+  - {nelec: 24, norb: 24, label: "xxlarge"}
+
+qpe:
+  # QPE target additive precision (Hartree)
+  epsilon_ha: 0.0016  # = 1.6 mHa = chemical accuracy
+  # Synthesis precision per rotation
+  rotation_synthesis_eps: 1.0e-10
+
+thc:
+  # THC rank multiplier: M = thc_factor * N
+  thc_factor: 6
+  # Lambda compression vs DF: depends on system size
+  compression_thresholds:
+    large: {min_orb: 16, factor: 0.5}
+    medium: {min_orb: 8, factor: 0.6}
+    small: {min_orb: 0, factor: 0.7}
+
+surface_code:
+  cycle_time_us: 1.0
+  threshold: 0.01
+  target_logical_error_per_gate: 0.01
+  factory_qubits_per_factory_per_d2: 15
+  max_factories: 4
+  physical_error_rates: [1.0e-3, 1.0e-4, 1.0e-5]
+
+extrapolation:
+  # Active-space sizes for extrapolation in notebook 06
+  target_orbitals: [30, 40, 50, 60, 80, 100]
+
+femoco_benchmark:
+  # Lee et al. 2021 (PRX Quantum 2, 030305) reference numbers for FeMoco
+  active_space: "(54e, 54o)"
+  encoding: "THC"
+  lambda: 306.3
+  t_gates: 3.5e10
+  logical_qubits: 2196
+  physical_qubits_p3: 4000000
+  wall_days: 4.0
+
+plot:
+  # Muted, professional palette
+  color_pauli_lcu: "#4a90d9"
+  color_df: "#d4a853"
+  color_thc: "#5a8a6a"
+  color_fci: "#c74b50"
+  dpi: 200
+
+paths:
+  data_dir: "data"
+  figures_dir: "figures"
